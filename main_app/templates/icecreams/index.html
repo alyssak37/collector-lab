@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Ice Cream Lists</h1>
+{% for icecream in icecreams %}
+<a href="{% url 'icecreams_detail' icecream.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ icecream.name }}</span>
+            <p>Brand: {{ icecream.brand }}</p>
+            <p>Description: {{ icecream.description }}</p>
+            <p>Calories: {{ icecream.calories }}</p>
+        </div>
+    </div>
+</a>
+{% endfor %}
+
+{% endblock %}

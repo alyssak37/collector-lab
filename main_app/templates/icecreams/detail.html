@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Ice Cream Details</h1>
+<div class="row">
+    <div class="col s6">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">{{ icecream.name }}</span>
+                <p>Brand: {{ icecream.brand }}</p>
+                <p>Description {{ icecream.description }}</p>
+                <p>Calories: {{ icecream.calories }}</p>
+            </div>
+        <div class="card-action">
+            <a href="{% url 'icecreams_update' icecream.id %}">Edit</a>
+            <a href="{% url 'icecreams_delete' icecream.id %}">Delete</a>
+        </div>
+    </div>
+</div>
+<div class="col s6">
+  <form action="{% url 'add_eating' icecream.id %}" method="post">
+    {% csrf_token %}
+    {{ eating_form.as_p }}
+    <input type="submit" class="btn" value="Add Eating">
+  </form>
+    <table class="striped">
+      <thead>
+        <tr><th>Date</th><th>Meal</th></tr>
+      </thead>
+      <tbody>
+        {% for eating in icecream.eating_set.all %}
+          <tr>
+            <td>{{eating.date}}</td>
+            <td>{{eating.get_meal_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  
+  var dateEl = document.getElementById('id_date')
+    M.Datepicker.init(dateEl, {
+        format: 'yyyy-mm-dd',
+        defaultDate: new Date(),
+        setDefaultDate: true,
+        autoClose: true
+    })
+    // Meal dropdown
+    var selectEl = document.getElementById('id_meal')
+    M.FormSelect.init(selectEl)
+</script>
+{% endblock %}
