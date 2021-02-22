@@ -24,6 +24,7 @@ class Icecream(models.Model):
     description = models.TextField(max_length=250)
     calories = models.IntegerField()
 
+    toppings = models.ManyToManyField(Topping)
     def __str__(self):
         return self.name
 
