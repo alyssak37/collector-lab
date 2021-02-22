@@ -1,5 +1,6 @@
 from django.db import models
-from django.urls import reverse 
+from django.urls import reverse
+from django.contrib.auth.models import User 
 
 MEALS = (
     ('B', 'Breakfast'),
@@ -25,6 +26,12 @@ class Icecream(models.Model):
     calories = models.IntegerField()
 
     toppings = models.ManyToManyField(Topping)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user 
+        return super().form_valid(form)
+
     def __str__(self):
         return self.name
 
@@ -47,3 +54,9 @@ class Eating(models.Model):
     class Meta:
         ordering = ['-date']
 
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    icecream = models.ForeignKey(Icecream, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Photo for icecream_id: {self.icecream_id} @{self.url}"
