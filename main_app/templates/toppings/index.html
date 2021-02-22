@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Toppings</h1>
+{% for topping in toppings %}
+<a href="{% url 'toppings_detail' topping.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ topping.name }}</span>
+            <p>Color: {{ topping.color }}</p>
+        </div>
+    </div>
+</a>
+{% endfor %}
+{% endblock %}
