@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from datetime import date
 from django.contrib.auth.models import User 
 
 MEALS = (
@@ -37,6 +38,9 @@ class Icecream(models.Model):
 
     def get_absolute_url(self):
         return reverse('icecreams_detail', kwargs={'icecream_id': self.id})
+
+    def ate_for_today(self):
+        return self.eating_set.filter(date=date.today()).count() >= len(MEALS)
 
 class Eating(models.Model):
     date = models.DateField('eating date')
