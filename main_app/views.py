@@ -82,6 +82,10 @@ class IcecreamCreate(LoginRequiredMixin, CreateView):
     model = Icecream
     fields = ['name', 'brand', 'description', 'calories']
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user 
+        return super().form_valid(form)
+
 class IcecreamUpdate(LoginRequiredMixin, UpdateView):
     model = Icecream
     fields = ['brand', 'description', 'calories']
