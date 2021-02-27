@@ -14,18 +14,21 @@ S3_BASE_URL = 'https://s3.us-east-1.amazonaws.com/'
 BUCKET = 'alyssa-nexus-catcollector'
 # Create your views here.
 def signup(request):
-  error_message = ''
-  if request.method == 'POST':
-    form = UserCreationForm(request.POST)
-    if form.is_valid():
-      user = form.save()
-      login(request, user)
-      return redirect('icecreams_index')
-    else:
-      error_message = 'Invalid sign up - try again'
-  form = UserCreationForm()
-  context = {'form': form, 'error_message': error_message}
-  return render(request, 'registration/signup.html', context)
+    error_message = ''
+
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('icecream_index')
+        else:
+            error_message = 'Invalid data for sign up'
+        
+    form = UserCreationForm()
+    context = { 'form': form, 'error_message': error_message }
+    return render(request, 'registration/signup.html', context)
 
 def home(request):
     return render(request, 'home.html')
